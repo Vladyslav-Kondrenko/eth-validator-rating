@@ -24,7 +24,6 @@
     try{
       const signatureData = await web3.eth.personal.sign(web3.utils.utf8ToHex("test"), accountAddress.value, "")
       signButtonText.value = sliceTransaction(signatureData)
-      console.log(signatureData)
       createToast('MetaMask Personal Message Signature', 'User signed message signature', 'success')
     } catch(error){
       createToast('MetaMask Personal Message Signature', 'User denied message signature', 'error')
