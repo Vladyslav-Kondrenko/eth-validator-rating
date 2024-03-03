@@ -22,7 +22,7 @@
 
   const signMessage = async function(){
     try{
-      const signatureData = await web3.eth.personal.sign(web3.utils.utf8ToHex("test"), accountAddress.value, "")
+      const signatureData = await web3.eth.personal.sign(web3.utils.utf8ToHex("test message"), accountAddress.value, "")
       signButtonText.value = sliceTransaction(signatureData)
       createToast('MetaMask Personal Message Signature', 'User signed message signature', 'success')
     } catch(error){
