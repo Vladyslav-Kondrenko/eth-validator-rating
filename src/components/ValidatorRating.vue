@@ -85,7 +85,7 @@ watch(aprSwitcher, () => {
 </script>
 <!-- TODO: change someevent to normal name -->
 <template>
-  <div class="container py-10 mx-auto">
+  <div class="py-10 mx-auto">
     <div class="py-3 px-4 flex justify-between bg-primary rounded-lg text-sm items-center mb-4">
       <p class="color-secondary">Ethereum validator rating</p>
       <MultiSwitcher :switchers="AprSwitchers" @activeSwitcherChanged="handleSwitcherChanges" />
