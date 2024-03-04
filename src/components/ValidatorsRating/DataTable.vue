@@ -93,7 +93,7 @@ watch(() => props.filteredColumns, () => {
 </script>
 
 <template>
-    <div class="border rounded-md">
+    <div class="mb-4">
         <Table>
             <TableHeader>
                 <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">

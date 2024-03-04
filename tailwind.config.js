@@ -13,6 +13,9 @@ module.exports = {
 	],
   
   theme: {
+    fontFamily: {
+      'sans': ['DM Mono', 'Sans-serif']
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -28,11 +31,11 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "var(--primary)",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
+          DEFAULT: "var(--secondary)",
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {

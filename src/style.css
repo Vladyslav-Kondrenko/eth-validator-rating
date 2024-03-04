@@ -1,13 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: #18181B;
-    --foreground: #B6B6B6;
+    --foreground: #fff;
  
-    --muted: 60 4.8% 95.9%;
+    --muted: 60 1% 15%;
     --muted-foreground: 25 5.3% 44.7%;
  
     --popover: 0 0% 100%;
@@ -19,10 +20,10 @@
     --border: #404047;
     --input: 20 5.9% 90%;
  
-    --primary: #ffffff;
+    --primary: #27272A;
     --primary-foreground: 60 9.1% 97.8%;
  
-    --secondary: 60 4.8% 95.9%;
+    --secondary: #B6B6B6;
     --secondary-foreground: 24 9.8% 10%;
  
     --accent: 60 4.8% 95.9%;

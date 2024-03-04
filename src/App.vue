@@ -5,7 +5,7 @@
     </div>
 
     <div class="container px-1 md:px-5">
-      <h1>Stay on top of crypto.
+      <h1 class="font-dm-mono text-4xl font-medium leading-10 tracking-normal text-left">Stay on top of crypto. <br>
         Task for front end.
       </h1>
       <ValidatorsRating/>

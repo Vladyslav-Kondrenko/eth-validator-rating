@@ -10,6 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { ChevronsRight, ChevronRight, ChevronsLeft, ChevronLeft } from 'lucide-vue-next'
+
 
 interface DataTablePaginationProps {
   table: Table<Task>
@@ -18,9 +20,9 @@ defineProps<DataTablePaginationProps>()
 </script>
 
 <template>
-  <div class="flex items-center justify-between px-2">
-    <div class="flex items-center space-x-6 lg:space-x-8">
-      <div class="flex items-center space-x-2">
+  <div class="flex items-center justify-between px-2 w-full">
+    <div class="flex items-center space-x-6 lg:space-x-8 w-full">
+      <div class="flex items-center space-x-2 w-1/3">
         <p class="text-sm font-medium">
           Rows per page
         </p>
@@ -38,17 +40,15 @@ defineProps<DataTablePaginationProps>()
           </SelectContent>
         </Select>
       </div>
-      <div class="flex w-[100px] items-center justify-center text-sm font-medium">
-        Page {{ table.getState().pagination.pageIndex + 1 }} of
-        {{ table.getPageCount() }}
-      </div>
-      <div class="flex items-center space-x-2">
+   
+      <div class="flex items-center justify-center space-x-2 w-1/3">
         <Button
           variant="outline"
           class="hidden w-8 h-8 p-0 lg:flex"
           :disabled="!table.getCanPreviousPage()"
           @click="table.setPageIndex(0)"
         >
+          <ChevronsLeft class="w-4 h-4"/>
           <span class="sr-only">Go to first page</span>
         </Button>
         <Button
@@ -57,6 +57,7 @@ defineProps<DataTablePaginationProps>()
           :disabled="!table.getCanPreviousPage()"
           @click="table.previousPage()"
         >
+          <ChevronLeft class="w-4 h-4"/>
           <span class="sr-only">Go to previous page</span>
         </Button>
         <Button
@@ -65,6 +66,7 @@ defineProps<DataTablePaginationProps>()
           :disabled="!table.getCanNextPage()"
           @click="table.nextPage()"
         >
+          <ChevronRight class="w-4 h-4"/>
           <span class="sr-only">Go to next page</span>
         </Button>
         <Button
@@ -73,8 +75,13 @@ defineProps<DataTablePaginationProps>()
           :disabled="!table.getCanNextPage()"
           @click="table.setPageIndex(table.getPageCount() - 1)"
         >
+        <ChevronsRight class="w-4 h-4"/>
           <span class="sr-only">Go to last page</span>
         </Button>
+      </div>
+      <div class="flex items-center justify-end text-sm font-medium w-1/3">
+        Page {{ table.getState().pagination.pageIndex + 1 }} of
+        {{ table.getPageCount() }}
       </div>
     </div>
   </div>

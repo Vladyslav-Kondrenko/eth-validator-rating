@@ -1,16 +1,14 @@
 <template>
-  <div class="flex space-x-4">
-    <div v-for="(switcher, index) in switchers" :key="index">
-      <button @click="activateSwitcher(switcher.slag)"
-              :class="{ active: activeSwitcherSlag === switcher.slag }">
+  <div class="flex space-x-4 bg-background py-1 px-1 rounded-xl">
+      <button v-for="(switcher, index) in switchers" :key="index" @click="activateSwitcher(switcher.slag)"
+              :class="{'bg-primary opacity-100': activeSwitcherSlag === switcher.slag }" class="font-sans text-[8px] font-normal leading-none uppercase py-1 px-3 rounded-xl opacity-50">
         {{ switcher.name }}
       </button>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref, defineProps, watch } from 'vue'
+  import { ref, defineProps, defineEmits, watch } from 'vue'
 
   const emit = defineEmits(['activeSwitcherChanged'])
 
@@ -35,7 +33,5 @@
 </script>
 
 <style scoped>
-  .active {
-    background-color: lightblue;
-  }
+
 </style>

@@ -30,7 +30,7 @@ let rowCount = ref<number>(0);
 let data = ref<Validator[]>([])
 
 async function getData(){
-  const url = `https://api.ethrewards.io/entities/stats?page=${pagination.value.pageIndex + 1}&limit=${pagination.value.pageSize}&sort_by=${getActiveSwitcher()}&order=asc`;
+  const url = `https://api.ethrewards.io/entities/stats?page=${pagination.value.pageIndex + 1}&limit=${pagination.value.pageSize}&sort_by=${getActiveSwitcher()}&order=desc`;
 
   try {
     const response = await axios.get<{ items: Validator[], count: number }>(url);
@@ -86,8 +86,8 @@ watch(aprSwitcher, () => {
 <!-- TODO: change someevent to normal name -->
 <template>
   <div class="container py-10 mx-auto">
-    <div class="p-2 flex justify-between">
-      <p >Ethereum validator rating</p>
+    <div class="py-3 px-4 flex justify-between bg-primary rounded-lg text-sm items-center mb-4">
+      <p class="color-secondary">Ethereum validator rating</p>
       <MultiSwitcher :switchers="AprSwitchers" @activeSwitcherChanged="handleSwitcherChanges" />
     </div>
     <DataTable :filteredColumns="aprSwitcher" :columns="columns" :data="data" :rowCount="rowCount" :pagination="pagination" @someEvent="handleSortChange" @pageEvent="handlePaginationChange" />
