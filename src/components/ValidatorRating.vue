@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch } from 'vue'
-import { columns } from "@/components/ValidatorsRating/columns"
-import type { Validator } from '@/components/ValidatorsRating/validator.type';
+import { columns } from "@/components/DataTable/columns"
+import type { Validator } from '@/components/validator.type';
 import type { Switcher } from '@/components/switcher.type';
-import DataTable from "@/components/ValidatorsRating/DataTable.vue"
+import DataTable from "@/components/DataTable/DataTable.vue"
 import MultiSwitcher from "@/components/MultiSwitcher.vue"
 import axios from 'axios'
 import type { PaginationState, VisibilityState } from '@tanstack/vue-table'
-
 
 const AprSwitchers: Switcher[] = [
   {
@@ -32,7 +31,12 @@ let data = ref<Validator[]>([])
 let ethPrice = 0;
 
 async function getData(){
-  const url = `https://api.ethrewards.io/entities/stats?page=${pagination.value.pageIndex + 1}&limit=${pagination.value.pageSize}&sort_by=${getActiveSwitcher()}&order=${sortBy.value}`;
+  const activeSwitcher = getActiveSwitcher();
+  let url = `https://api.ethrewards.io/entities/stats?page=${pagination.value.pageIndex + 1}&limit=${pagination.value.pageSize}&order=${sortBy.value}`;
+
+  if (activeSwitcher !== null) {
+    url += `&sort_by=${activeSwitcher}`;
+  }
 
   try {
     const response = await axios.get<{ items: Validator[], count: number }>(url);
@@ -41,7 +45,6 @@ async function getData(){
       data.value = data.value.map(item => {
         return { ...item, staked_usd: item.staked * ethPrice };
       });
-      console.log(data.value, 'data.value update')
     } catch (error) {
       console.error('Error fetching data:', error);
   }
@@ -68,9 +71,7 @@ const handleSortChange = function(sortSettings: { desc: boolean }){
 }
 
 const handlePaginationChange = function(e: PaginationState){
-  console.log(e)
   pagination.value = e;
-  console.log(pagination.value, 'handlePaginationChange')
 }
 
 const handleSwitcherChanges = function(slag: string) {
@@ -80,34 +81,28 @@ const handleSwitcherChanges = function(slag: string) {
 };
 
 const getActiveSwitcher = function() {
-  let activeElement = null;
-  Object.keys(aprSwitcher).forEach(key => {
-    if (aprSwitcher[key] === true) {
-      activeElement = key;
-    }
-  });
-  return activeElement;
+  return Object.keys(aprSwitcher).find(key => aprSwitcher[key] === true) || null;
 };
 
 watch(pagination, () => {
-  getData()
+  getData();
 }, { deep: true });
 
 watch(aprSwitcher, () => {
   pagination.value.pageIndex = 0;
-  getData()
+  getData();
 }, { deep: true });
 
 watch(sortBy, () => {
   pagination.value.pageIndex = 0;
-  getData()
+  getData();
 });
 
 </script>
 <template>
   <div class="py-10 mx-auto">
     <div class="py-3 px-4 flex justify-between bg-primary rounded-lg text-sm items-center mb-4 flex-col md:flex-row">
-      <p class="color-secondary mb-2 md:mb-0">Ethereum validator rating</p>
+      <p class="color-secondary mb-2 md:mb-0 text-secondary">Ethereum validator rating</p>
       <MultiSwitcher :switchers="AprSwitchers" @activeSwitcherChanged="handleSwitcherChanges" />
     </div>
     <DataTable :filteredColumns="aprSwitcher" :columns="columns" :data="data" :rowCount="rowCount" :pagination="pagination" @sortChanged="handleSortChange" @pageChanged="handlePaginationChange" />

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { type Table } from '@tanstack/vue-table'
 import { type Task } from '../data/schema'
-
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -12,7 +11,6 @@ import {
 } from '@/components/ui/select'
 import { ChevronsRight, ChevronRight, ChevronsLeft, ChevronLeft } from 'lucide-vue-next'
 
-
 interface DataTablePaginationProps {
   table: Table<Task>
 }
@@ -22,7 +20,7 @@ defineProps<DataTablePaginationProps>()
 <template>
   <div class="flex items-center justify-between px-2 w-full">
     <div class="flex items-center md:space-x-6 lg:space-x-8 w-full flex-col md:flex-row gap-2 md:gap-0">
-      <div class="flex items-center space-x-2 md:w-1/3">
+      <div class="flex items-center space-x-2 md:w-1/3 text-secondary">
         <p class="text-sm font-medium">
           Rows per page
         </p>
@@ -79,7 +77,7 @@ defineProps<DataTablePaginationProps>()
           <span class="sr-only">Go to last page</span>
         </Button>
       </div>
-      <div class="flex items-center justify-end text-sm font-medium md:w-1/3">
+      <div class="flex items-center justify-end text-sm font-medium md:w-1/3 text-secondary">
         Page {{ table.getState().pagination.pageIndex + 1 }} of
         {{ table.getPageCount() }}
       </div>

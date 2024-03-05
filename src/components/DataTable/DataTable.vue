@@ -5,13 +5,9 @@ import type {
   PaginationState,
   VisibilityState
 } from '@tanstack/vue-table'
-
 import { valueUpdater } from '@/lib/utils'
-import DataTablePagination from "@/components/ValidatorsRating/DataTablePagination.vue"
-
-import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
-import { h, ref, defineEmits, watch } from 'vue'
-
+import DataTablePagination from "@/components/DataTable/DataTablePagination.vue"
+import { ref, defineEmits, watch } from 'vue'
 import {
     FlexRender,
     getCoreRowModel,
@@ -19,7 +15,6 @@ import {
     getSortedRowModel,
     useVueTable,
 } from "@tanstack/vue-table"
-
 import {
     Table,
     TableBody,
@@ -30,7 +25,6 @@ import {
 } from "@/components/ui/table"
 
 const emit = defineEmits(['sortChanged', 'pageChanged'])
-
 const props = defineProps<{
     columns: ColumnDef<TData, TValue>[]
     data: TData[],
@@ -38,17 +32,9 @@ const props = defineProps<{
     pagination: PaginationState,
     filteredColumns: VisibilityState,
 }>()
-
 const rowCount = ref(props.rowCount)
-
-watch(() => props.rowCount, (newVal, oldVal) => {
-    console.log('rowCountrowCountrowCount');
-    rowCount.value = newVal
-})
 const sorting = ref<SortingState>([])
 const pagination = ref<PaginationState>(props.pagination)
-
-
 const table = useVueTable({
     get data() { return props.data },
     get columns() { return props.columns },
@@ -75,18 +61,18 @@ const table = useVueTable({
 })
 
 table.setColumnVisibility(props.filteredColumns)
-console.log(props.filteredColumns)
 
 watch(() => props.filteredColumns, () => {
-    console.log(props.filteredColumns)
     table.setColumnVisibility(props.filteredColumns)
 })
 
-
+watch(() => props.rowCount, (newVal) => {
+    rowCount.value = newVal
+})
 </script>
 
 <template>
-    <div class="mb-4">
+    <div class="mb-4 px-2">
         <Table>
             <TableHeader>
                 <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">

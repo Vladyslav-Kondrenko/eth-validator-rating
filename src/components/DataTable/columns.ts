@@ -1,10 +1,10 @@
 import { h } from 'vue'
-import type { Validator } from './validator.type'
+import type { Validator } from '../validator.type'
 import type { ColumnDef } from '@tanstack/vue-table';
 import { splitLongNumber } from '@/composable/splitLongNumber'
 import { Button } from '@/components/ui/button'
 import { ArrowDown } from 'lucide-vue-next'
-// TODO REFACTOR HERE
+
 export const columns: ColumnDef<Validator>[] = [
   {
     accessorKey: 'id',
@@ -17,7 +17,6 @@ export const columns: ColumnDef<Validator>[] = [
           onClick: () => {
             // default sortingOrder can be as asc|desc|null. With this code order can be only asc|desc
             column.toggleSorting(nextSortingOrder)
-            
           },
       }, () => [h(ArrowDown, { class: `mr-2 h-4 w-4 ${iconClass}` }),'#'])
   },
@@ -47,13 +46,13 @@ export const columns: ColumnDef<Validator>[] = [
       ]);
     },
   },
+  // adding extra columns as apr_30days/apr_365days is not the best way to create filtering
   {
     accessorKey: 'apr',
     header: () => h('div', { class: 'text-secondary uppercase' }, 'APR'),
     cell: ({ row }) => {
-      let apr = Number.parseFloat(row.getValue('apr'))
+      let apr = Number.parseFloat(row.getValue('apr')) * 100;
       apr = +apr.toFixed(2);
-      console.log(row.getValue('apr'), 'apr')
       return h('div', { class: 'font-medium text-[#00FF47]' }, apr+'%')
     },
   },
@@ -61,8 +60,7 @@ export const columns: ColumnDef<Validator>[] = [
     accessorKey: 'apr_30days',
     header: () => h('div', { class: 'text-secondary uppercase' }, 'APR'),
     cell: ({ row }) => {
-      console.log('TEST', row.getValue('apr_30days'))
-      let apr = Number.parseFloat(row.getValue('apr_30days'))
+      let apr = Number.parseFloat(row.getValue('apr_30days')) * 100;
       apr = +apr.toFixed(2);
       return h('div', { class: 'font-medium text-[#00FF47]' }, apr+'%')
     },
@@ -71,7 +69,7 @@ export const columns: ColumnDef<Validator>[] = [
     accessorKey: 'apr_365days',
     header: () => h('div', { class: 'text-secondary uppercase' }, 'APR'),
     cell: ({ row }) => {
-      let apr = Number.parseFloat(row.getValue('apr_365days'))
+      let apr = Number.parseFloat(row.getValue('apr_365days')) * 100;
       apr = +apr.toFixed(2);
       return h('div', { class: 'font-medium text-[#00FF47]' }, apr+'%')
     },
