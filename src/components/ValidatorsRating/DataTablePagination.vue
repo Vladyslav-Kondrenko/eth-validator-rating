@@ -21,8 +21,8 @@ defineProps<DataTablePaginationProps>()
 
 <template>
   <div class="flex items-center justify-between px-2 w-full">
-    <div class="flex items-center space-x-6 lg:space-x-8 w-full">
-      <div class="flex items-center space-x-2 w-1/3">
+    <div class="flex items-center md:space-x-6 lg:space-x-8 w-full flex-col md:flex-row gap-2 md:gap-0">
+      <div class="flex items-center space-x-2 md:w-1/3">
         <p class="text-sm font-medium">
           Rows per page
         </p>
@@ -41,7 +41,7 @@ defineProps<DataTablePaginationProps>()
         </Select>
       </div>
    
-      <div class="flex items-center justify-center space-x-2 w-1/3">
+      <div class="flex items-center justify-center space-x-2 md:w-1/3">
         <Button
           variant="outline"
           class="hidden w-8 h-8 p-0 lg:flex"
@@ -79,7 +79,7 @@ defineProps<DataTablePaginationProps>()
           <span class="sr-only">Go to last page</span>
         </Button>
       </div>
-      <div class="flex items-center justify-end text-sm font-medium w-1/3">
+      <div class="flex items-center justify-end text-sm font-medium md:w-1/3">
         Page {{ table.getState().pagination.pageIndex + 1 }} of
         {{ table.getPageCount() }}
       </div>

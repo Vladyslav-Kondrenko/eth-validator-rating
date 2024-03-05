@@ -107,8 +107,8 @@ watch(sortBy, () => {
 </script>
 <template>
   <div class="py-10 mx-auto">
-    <div class="py-3 px-4 flex justify-between bg-primary rounded-lg text-sm items-center mb-4">
-      <p class="color-secondary">Ethereum validator rating</p>
+    <div class="py-3 px-4 flex justify-between bg-primary rounded-lg text-sm items-center mb-4 flex-col md:flex-row">
+      <p class="color-secondary mb-2 md:mb-0">Ethereum validator rating</p>
       <MultiSwitcher :switchers="AprSwitchers" @activeSwitcherChanged="handleSwitcherChanges" />
     </div>
     <DataTable :filteredColumns="aprSwitcher" :columns="columns" :data="data" :rowCount="rowCount" :pagination="pagination" @sortChanged="handleSortChange" @pageChanged="handlePaginationChange" />
