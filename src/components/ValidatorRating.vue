@@ -90,17 +90,16 @@ const getActiveSwitcher = function() {
 };
 
 watch(pagination, () => {
-  console.log('Pagination state changed:');
   getData()
 }, { deep: true });
 
 watch(aprSwitcher, () => {
-  console.log('aprSwitcher state changed:');
+  pagination.value.pageIndex = 0;
   getData()
 }, { deep: true });
 
 watch(sortBy, () => {
-  console.log('sortBy state changed:');
+  pagination.value.pageIndex = 0;
   getData()
 });
 
