@@ -29,7 +29,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-const emit = defineEmits(['someEvent', 'pageEvent'])
+const emit = defineEmits(['sortChanged', 'pageChanged'])
 
 const props = defineProps<{
     columns: ColumnDef<TData, TValue>[]
@@ -50,13 +50,6 @@ const pagination = ref<PaginationState>(props.pagination)
 
 
 const table = useVueTable({
-//     initialState: {
-//     columnVisibility: {
-//       'apr': false,
-//       'apr_30days': true,
-//       'apr_365days': false,
-//     },
-//   },
     get data() { return props.data },
     get columns() { return props.columns },
     get rowCount() { return props.rowCount },
@@ -67,12 +60,12 @@ const table = useVueTable({
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: updaterOrValue => {
         valueUpdater(updaterOrValue, sorting)
-        emit('someEvent', sorting.value?.[0])
+        emit('sortChanged', sorting.value?.[0])
     },
     onPaginationChange: updaterOrValue => {
         valueUpdater(updaterOrValue, pagination)
         console.log(pagination)
-        emit('pageEvent', pagination.value)
+        emit('pageChanged', pagination.value)
     },
   
     state: {
@@ -85,7 +78,7 @@ table.setColumnVisibility(props.filteredColumns)
 console.log(props.filteredColumns)
 
 watch(() => props.filteredColumns, () => {
-    console.log(proprs.filteredColumns)
+    console.log(props.filteredColumns)
     table.setColumnVisibility(props.filteredColumns)
 })
 

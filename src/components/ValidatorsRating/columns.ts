@@ -1,7 +1,7 @@
 import { h } from 'vue'
 import type { Validator } from './validator.type'
 import type { ColumnDef } from '@tanstack/vue-table';
-
+import { splitLongNumber } from '@/composable/splitLongNumber'
 import { Button } from '@/components/ui/button'
 import { ArrowDown } from 'lucide-vue-next'
 // TODO REFACTOR HERE
@@ -30,43 +30,49 @@ export const columns: ColumnDef<Validator>[] = [
     accessorKey: 'name',
     header: () => h('div', { class: 'text-secondary uppercase' }, 'Name'),
     cell: ({ row }) => {
-      const id = row.getValue('name') ?? '';
-      return h('div', { class: 'text-xs' }, id)
+      const name: string = row.getValue('name') ?? '';
+      return h('div', { class: 'text-xs' }, name)
     },
   },
   {
     accessorKey: 'staked',
     header: () => h('div', { class: 'text-secondary uppercase' }, 'Staked'),
     cell: ({ row }) => {
-      const id = Number.parseFloat(row.getValue('staked'))
-      return h('div', { class: 'font-medium' }, id)
+      const staked = splitLongNumber(Number.parseFloat(row.getValue('staked')))
+      const stakedUsd = splitLongNumber(row.original.staked_usd);
+
+      return h('div', { class: 'font-medium' }, [
+        h('div', {}, staked + ' ETH'),
+        h('div', {class: 'text-xs font-normal text-[#575757]'}, '$ ' + stakedUsd)
+      ]);
     },
   },
   {
     accessorKey: 'apr',
-    header: () => h('div', { class: 'text-secondary uppercase' }, 'APR def'),
+    header: () => h('div', { class: 'text-secondary uppercase' }, 'APR'),
     cell: ({ row }) => {
-      const apr = Number.parseFloat(row.getValue('apr'))
-      
-      console.log(row.getValue('apr_30days'), 'apr_30days')
+      let apr = Number.parseFloat(row.getValue('apr'))
+      apr = +apr.toFixed(2);
+      console.log(row.getValue('apr'), 'apr')
       return h('div', { class: 'font-medium text-[#00FF47]' }, apr+'%')
     },
   },
   {
     accessorKey: 'apr_30days',
-    header: () => h('div', { class: 'text-secondary uppercase' }, 'APR 30'),
+    header: () => h('div', { class: 'text-secondary uppercase' }, 'APR'),
     cell: ({ row }) => {
-      const apr = Number.parseFloat(row.getValue('apr_30days'))
-      console.log(row)
+      console.log('TEST', row.getValue('apr_30days'))
+      let apr = Number.parseFloat(row.getValue('apr_30days'))
+      apr = +apr.toFixed(2);
       return h('div', { class: 'font-medium text-[#00FF47]' }, apr+'%')
     },
   },
   {
     accessorKey: 'apr_365days',
-    header: () => h('div', { class: 'text-secondary uppercase' }, 'APR 365'),
+    header: () => h('div', { class: 'text-secondary uppercase' }, 'APR'),
     cell: ({ row }) => {
-      const apr = Number.parseFloat(row.getValue('apr_365days'))
-      console.log(row)
+      let apr = Number.parseFloat(row.getValue('apr_365days'))
+      apr = +apr.toFixed(2);
       return h('div', { class: 'font-medium text-[#00FF47]' }, apr+'%')
     },
   },
@@ -74,24 +80,26 @@ export const columns: ColumnDef<Validator>[] = [
     accessorKey: 'executed_rewards',
     header: () => h('div', { class: 'text-secondary uppercase' }, 'Execution Rewards'),
     cell: ({ row }) => {
-      const id = Number.parseFloat(row.getValue('executed_rewards'))
-      return h('div', { class: 'font-medium' }, id)
+      let executed_rewards = Number.parseFloat(row.getValue('executed_rewards'))
+      executed_rewards = +executed_rewards.toFixed(2);
+      return h('div', { class: 'font-medium' }, executed_rewards + ' ETH')
     },
   },
   {
     accessorKey: 'consensus_rewards',
     header: () => h('div', { class: 'text-secondary uppercase' }, 'Consensus Rewards'),
     cell: ({ row }) => {
-      const id = Number.parseFloat(row.getValue('consensus_rewards'))
-      return h('div', { class: 'font-medium' }, id)
+      let consensus_rewards = Number.parseFloat(row.getValue('consensus_rewards'))
+      consensus_rewards = +consensus_rewards.toFixed(2);
+      return h('div', { class: 'font-medium' }, consensus_rewards + ' ETH')
     },
   },
   {
     accessorKey: 'produced_blocks',
     header: () => h('div', { class: 'text-secondary uppercase' }, 'Produced Blocks'),
     cell: ({ row }) => {
-      const amount = Number.parseFloat(row.getValue('produced_blocks'))
-      return h('div', { class: 'font-medium' }, amount + '%')
+      const produced_blocks = Number.parseFloat(row.getValue('produced_blocks'))
+      return h('div', { class: 'font-medium' }, produced_blocks + '%')
     },
   },
 ]

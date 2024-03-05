@@ -1,7 +1,7 @@
 <template>
   <div class="flex space-x-4 bg-background py-1 px-1 rounded-xl">
       <button v-for="(switcher, index) in switchers" :key="index" @click="activateSwitcher(switcher.slag)"
-              :class="{'bg-primary opacity-100': activeSwitcherSlag === switcher.slag }" class="font-sans text-[8px] font-normal leading-none uppercase py-1 px-3 rounded-xl opacity-50">
+              :class="{'bg-primary text-[#fff]': activeSwitcherSlag === switcher.slag }" class="font-sans text-[8px] font-normal leading-none uppercase py-1 px-3 rounded-xl text-[#494949] transition-colors hover:text-[#fff]">
         {{ switcher.name }}
       </button>
   </div>
